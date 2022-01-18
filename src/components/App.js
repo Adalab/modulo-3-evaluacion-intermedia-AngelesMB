@@ -74,6 +74,11 @@ function App() {
         <td>{eachData.name}</td>
         <td>{eachData.counselor}</td>
         <td>{eachData.speciality}</td>
+        <td>
+          {eachData.socialNetworks.map((eachSocialNetwork) => (
+            <a className="table__links" href={eachSocialNetwork.url}>{eachSocialNetwork.name}</a>
+          ))}
+        </td>
       </tr>
     ));
 
@@ -111,6 +116,7 @@ function App() {
                 <th className="table__column">Nombre</th>
                 <th className="table__column">Tutora</th>
                 <th className="table__column">Especialidad</th>
+                <th className="table__column">Redes</th>
               </tr>
             </thead>
             <tbody>{rowsHtml}</tbody>
