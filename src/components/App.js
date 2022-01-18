@@ -12,10 +12,10 @@ function App() {
     name: "",
     counselor: "",
     speciality: "",
-    id: "",
+    socialNetworks: [],
   });
   const [searchValue, setSearchValue] = useState("");
-  const [selectValue, setSelectValue] = useState("");
+  const [selectValue, setSelectValue] = useState("Todas");
 
   // effect api
   useEffect(() => {
@@ -41,15 +41,14 @@ function App() {
     if (
       newUser.name !== "" &&
       newUser.counselor !== "" &&
-      newUser.speciality !== "" &&
-      newUser.id !== ""
+      newUser.speciality !== ""
     ) {
       setData([...data, newUser]);
       setNewUser({
         name: "",
         counselor: "",
         speciality: "",
-        id: "",
+        socialNetworks: [],
       });
     } else {
       window.alert("Debes completar todos los campos");
@@ -75,7 +74,7 @@ function App() {
         eachData.speciality.toLowerCase().includes(searchValue.toLowerCase())
     )
     .filter(
-      selectValue !== ""
+      selectValue !== "Todas"
         ? (eachData) => eachData.counselor === selectValue
         : (eachData) => eachData
     )
@@ -85,15 +84,19 @@ function App() {
         <td>{eachData.counselor}</td>
         <td>{eachData.speciality}</td>
         <td>
-          {eachData.socialNetworks.map((eachSocialNetwork, index) => (
-            <a
-              key={index}
-              className="table__links"
-              href={eachSocialNetwork.url}
-            >
-              {eachSocialNetwork.name}
-            </a>
-          ))}
+          {eachData.socialNetworks.length !== 0 ? (
+            eachData.socialNetworks.map((eachSocialNetwork, index) => (
+              <a
+                key={index}
+                className="table__links"
+                href={eachSocialNetwork.url}
+              >
+                {eachSocialNetwork.name}
+              </a>
+            ))
+          ) : (
+            <span>Sin redes sociales</span>
+          )}
         </td>
       </tr>
     ));
@@ -123,9 +126,7 @@ function App() {
               onChange={handleCounselorChange}
               value={selectValue}
             >
-              <option disabled value="">
-                Escoge una opción
-              </option>
+              <option value="Todas">Todas</option>
               <option value="Yanelis">Yanelis</option>
               <option value="Dayana">Dayana</option>
               <option value="Iván">Iván</option>
