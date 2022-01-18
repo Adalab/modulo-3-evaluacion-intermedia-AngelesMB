@@ -15,6 +15,7 @@ function App() {
     id: "",
   });
   const [searchValue, setSearchValue] = useState("");
+  const [selectValue, setSelectValue] = useState("");
 
   // effect api
   useEffect(() => {
@@ -59,6 +60,10 @@ function App() {
     setSearchValue(ev.currentTarget.value);
   };
 
+  const handleCounselorChange = (ev) => {
+    setSelectValue(ev.currentTarget.value);
+  };
+
   // html
   const titleHtml = <h1>Adalabers</h1>;
 
@@ -69,14 +74,25 @@ function App() {
         eachData.counselor.toLowerCase().includes(searchValue.toLowerCase()) ||
         eachData.speciality.toLowerCase().includes(searchValue.toLowerCase())
     )
+    .filter(
+      selectValue !== ""
+        ? (eachData) => eachData.counselor === selectValue
+        : (eachData) => eachData
+    )
     .map((eachData) => (
       <tr className="table__row" key={eachData.id}>
         <td>{eachData.name}</td>
         <td>{eachData.counselor}</td>
         <td>{eachData.speciality}</td>
         <td>
-          {eachData.socialNetworks.map((eachSocialNetwork) => (
-            <a className="table__links" href={eachSocialNetwork.url}>{eachSocialNetwork.name}</a>
+          {eachData.socialNetworks.map((eachSocialNetwork, index) => (
+            <a
+              key={index}
+              className="table__links"
+              href={eachSocialNetwork.url}
+            >
+              {eachSocialNetwork.name}
+            </a>
           ))}
         </td>
       </tr>
@@ -99,15 +115,22 @@ function App() {
               onChange={handleSearchChange}
             />
           </label>
-          {/* <label className="form__label" htmlFor="counselorFilter">
+          <label className="form__label" htmlFor="counselorFilter">
             Escoge una tutora:
-            <select name="counselorFilter" id="counselorFilter">
-              <option value="">Escoge una opción</option>
+            <select
+              name="counselorFilter"
+              id="counselorFilter"
+              onChange={handleCounselorChange}
+              value={selectValue}
+            >
+              <option disabled value="">
+                Escoge una opción
+              </option>
               <option value="Yanelis">Yanelis</option>
               <option value="Dayana">Dayana</option>
-              <option value="Ivan">Iván</option>
+              <option value="Iván">Iván</option>
             </select>
-          </label> */}
+          </label>
         </form>
         <div className="main__container--table">
           <table className="table">
