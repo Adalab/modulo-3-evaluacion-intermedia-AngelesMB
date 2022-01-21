@@ -17,6 +17,8 @@ function App() {
   const [searchValue, setSearchValue] = useState("");
   const [selectValue, setSelectValue] = useState("Todas");
 
+  const [isFormValid, setIsFormValid] = useState(true);
+
   // effect api
   useEffect(() => {
     callToApi(URL).then((response) => {
@@ -35,6 +37,7 @@ function App() {
       [ev.currentTarget.id]: ev.currentTarget.value,
       id: data.length,
     });
+    setIsFormValid(true);
   };
 
   const handleButtonClick = () => {
@@ -50,8 +53,9 @@ function App() {
         speciality: "",
         socialNetworks: [],
       });
+      setIsFormValid(true);
     } else {
-      window.alert("Debes completar todos los campos");
+      setIsFormValid(false);
     }
   };
 
@@ -184,6 +188,9 @@ function App() {
               onChange={handleInputChange}
             />
           </label>
+          <p className={`form__message--error ${isFormValid ? "hidden" : ""}`}>
+            Debes completar todos los campos del formulario.
+          </p>
           <input
             className="form__button"
             type="submit"

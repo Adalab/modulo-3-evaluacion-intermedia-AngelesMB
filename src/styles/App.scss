@@ -71,5 +71,13 @@
     border: none;
     height: 30px;
     color: white;
+    cursor: pointer;
   }
+  &__message--error {
+    color: red;
+    font-size: 12px;
+  }
+}
+.hidden {
+  display: none;
 }
