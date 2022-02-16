@@ -1,13 +1,27 @@
 import "../styles/App.scss";
 import { useEffect, useState } from "react";
-import callToApi from "../services/api";
+// import callToApi from "../services/api";
+import dataList from "../data/data.json";
 
 function App() {
-  const URL =
-    "https://beta.adalab.es/pw-recursos/apis/adalabers-v1/promo-patata.json";
+  // const URL =
+  //   "https://beta.adalab.es/pw-recursos/apis/adalabers-v1/promo-patata.json";
+
+  // api no longer working, change to data.json
+  const cleanData = () =>
+    dataList.results.map((item) => {
+      const result = {
+        name: item.name,
+        id: item.id,
+        counselor: item.counselor,
+        speciality: item.speciality,
+        socialNetworks: item.social_networks,
+      };
+      return result;
+    });
 
   // states
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(cleanData);
   const [newUser, setNewUser] = useState({
     name: "",
     counselor: "",
@@ -20,11 +34,11 @@ function App() {
   const [isFormValid, setIsFormValid] = useState(true);
 
   // effect api
-  useEffect(() => {
-    callToApi(URL).then((response) => {
-      setData(response);
-    });
-  }, []);
+  // useEffect(() => {
+  //   callToApi(URL).then((response) => {
+  //     setData(response);
+  //   });
+  // }, []);
 
   // handlers
   const handleSubmit = (ev) => {
